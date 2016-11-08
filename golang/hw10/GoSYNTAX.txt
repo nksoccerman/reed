@@ -1,0 +1,84 @@
+<src> ::= 
+   package <name>
+   <imports>
+   <top decls>
+
+<import> ::= 
+  import <path>
+| import <name> <path>
+
+<top decl> ::= 
+  func <name> <formals> <type> <block>
+| func <receiver> <name> <formals> <type> <block>
+| <decl>
+
+<decl> ::= 
+  type <name> <type>
+| var <name> <type> = <expn>
+| const <name> <type> = <expn>
+
+<receiver> ::= ( <typed name> )
+<formals> ::= ( <typed name>, ... , <typed name> )
+<fields> ::= { <typed name>, ... , <typed name> }
+<typed name> ::= <name> <type>
+
+<stmt> ::=
+  <decl> 
+| <label> : <inst>
+| <expn>
+| <expn> <- <expn>
+| if <expn> <if block>
+| for <block>
+| for <expn> <block>
+| for <stmt>; <expn>; <stmt> <block>
+| for <names,> := range <expn> <block>
+| break
+| continue
+| goto <name>
+| return <expn>
+
+<block> ::= { <stmt> ; ... <stmt>; }
+
+<if block> ::= 
+  <block>
+| <block> else <block>
+| <block> else if <expn> <if block>
+
+<type> ::= 
+  bool
+| uint | byte | uint8 | uint16 | uint32 | uint64
+| int | rune | int8 | int16 | int32 | int64
+| float32 | float64 | complex64 | complex128
+| string
+| <chan> <type>
+| []<type>
+| map[<type>]<type>
+| struct <fields>
+
+<chan> ::= chan | <-chan | chan<-
+
+<bop> ::= one of || && == != < > <= >= * / % << >> + - & | ^
+<uop> ::= one of - !   
+
+<expn> ::= 
+   <literal> 
+ | <-<expn>
+ | <expn>.<name>
+ | <expn><args>
+ | <uop> <expn>
+ | <expn> <bop> <expn>
+ | make([]<type>,<expn>)
+ | make(map[<type>]<type>)
+ | make(<chan> <type>)
+ | [<expn>]<type> {<expns>,...}
+ | <expn>[<expn>]
+ | <expn>[<expn>:<expn>]
+ | { <expns>, ... } 
+
+<args> ::= ( <expn>, ..., <expn> )
+
+<literal> ::= 
+  true | false
+| ... | -2 | -1 | 0 | 1 | 2 | ...
+| " some characters "
+| func <formals> <type> <block> 

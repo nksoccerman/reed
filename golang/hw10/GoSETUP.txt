@@ -1,0 +1,16 @@
+cp /afs/reed.edu/user/j/i/jimfix/Public/hw10.zip ~/Private
+cd Private
+unzip hw10.zip
+echo 'export GOPATH=$HOME/go' >> ~/.bash_profile
+echo 'export PATH=$PATH:$GOPATH/bin' >> ~/.bash_profile 
+source ~/.bash_profile
+mkdir -p ~/go/src/github.com/your_login
+cd !$
+go get -u golang.org/x/tools/cmd/goimports
+go get -u golang.org/x/tools/cmd/vet
+go get -u golang.org/x/tools/cmd/godoc
+cd ~/Private/hw10
+
+# These are from the directions at
+#    http://www.wolfe.id.au/2015/03/05/using-sublime-text-for-go-development
+# He also recommends installing GoSublime into SublimeText2
