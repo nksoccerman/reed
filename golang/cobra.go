@@ -207,4 +207,31 @@ func main() {
 						rhs:&numberExpn{val:1}}}}}},
 		&printStmt{arg:&lookupExpn{name:"product"}}}}
 	pgm1.run(make(map[string] int))
+
+	var pgm2 *blck = &blck{stmts:[]stmt{
+		&assignStmt{lhs:"number", rhs:&inputExpn{}},
+		&whileStmt{
+			cnd:&equalCond{
+				lhs:&lookupExpn{name:"number"},
+				rhs:&numberExpn{val:10}},
+			bdy:&blck{stmts:[]stmt{
+				&assignStmt{
+					lhs:"number",
+					rhs:&plusExpn{
+						lhs:&lookupExpn{name:"number"},
+						rhs:&numberExpn{val:1}}},
+				&printStmt{arg:&lookupExpn{name:"number"}}}}}}}
+	pgm2.run(make(map[string] int))
+
+	var pgm3 *blck = &blck{stmts:[]stmt{
+	&assignStmt{lhs:"number", rhs:&inputExpn{}},
+	&ifThenElseStmt{
+		cnd:&equalCond{
+			lhs:&lookupExpn{name:"number"},
+			rhs:&numberExpn{val:10}},
+		thn:&blck{stmts:[]stmt{
+			&printStmt{arg:&lookupExpn{name:"number"}}}},
+		els:&blck{stmts:[]stmt{}}}}}
+	pgm3.run(make(map[string] int))
+			
 }
