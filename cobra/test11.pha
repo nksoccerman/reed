@@ -1,0 +1,149 @@
+main:
+	x = get
+	y = get
+	tmp1 = x
+	tmp2 = y
+	push tmp2
+	push tmp1
+	call mod
+	z = r1
+	r0 = pop
+	r0 = pop
+	tmp3 = z
+	tmp4 = 0
+	tmp5 = tmp3 - tmp4
+	if tmp5 == 0 go to then1
+	tmp6 = 0
+	put tmp6
+	go to after2
+then1:
+	tmp7 = 1
+	put tmp7
+after2:
+	stop
+mul:
+	a = mem[sp+1]
+	b = mem[sp+2]
+	p = 0
+on3:
+	tmp8 = 0
+	tmp9 = a
+	tmp10 = tmp8 - tmp9
+	if tmp10 < 0 go to istrue4
+	go to done5
+istrue4:
+	c = a
+	c = c // 2
+	tmp11 = c
+	tmp11 = tmp11 * 2
+	tmp12 = a
+	tmp13 = tmp11 - tmp12
+	if tmp13 == 0 go to then6
+	p = p + b
+	go to after7
+then6:
+	r0 = 0 # NO-OP
+after7:
+	a = c
+	b = b
+	b = b * 2
+	go to on3
+done5:
+	tmp14 = p
+	r1 = tmp14
+	return
+div:
+	a = mem[sp+1]
+	b = mem[sp+2]
+	one = 1
+	q = 0
+	tmp15 = b
+	tmp16 = 0
+	tmp17 = tmp15 - tmp16
+	if tmp17 < 0 go to then8
+	r0 = 0 # NO-OP
+	go to after9
+then8:
+	a = r0 - a
+	b = r0 - b
+after9:
+on10:
+	tmp18 = a
+	tmp19 = 0
+	tmp20 = tmp18 - tmp19
+	if tmp20 < 0 go to istrue11
+	go to done12
+istrue11:
+	a = a + b
+	q = q - one
+	go to on10
+done12:
+on13:
+	tmp21 = b
+	tmp22 = a
+	tmp23 = tmp21 - tmp22
+	if tmp23 < 0 go to istrue14
+	go to done15
+istrue14:
+	a = a - b
+	q = q + one
+	go to on13
+done15:
+	tmp24 = a
+	tmp25 = b
+	tmp26 = tmp24 - tmp25
+	if tmp26 == 0 go to then16
+	r0 = 0 # NO-OP
+	go to after17
+then16:
+	a = a - b
+	q = q + one
+after17:
+	tmp27 = q
+	r1 = tmp27
+	return
+mod:
+	a = mem[sp+1]
+	b = mem[sp+2]
+	tmp28 = b
+	tmp29 = 0
+	tmp30 = tmp28 - tmp29
+	if tmp30 < 0 go to then18
+	r0 = 0 # NO-OP
+	go to after19
+then18:
+	a = r0 - a
+	b = r0 - b
+after19:
+on20:
+	tmp31 = a
+	tmp32 = 0
+	tmp33 = tmp31 - tmp32
+	if tmp33 < 0 go to istrue21
+	go to done22
+istrue21:
+	a = a + b
+	go to on20
+done22:
+on23:
+	tmp34 = b
+	tmp35 = a
+	tmp36 = tmp34 - tmp35
+	if tmp36 < 0 go to istrue24
+	go to done25
+istrue24:
+	a = a - b
+	go to on23
+done25:
+	tmp37 = a
+	tmp38 = b
+	tmp39 = tmp37 - tmp38
+	if tmp39 == 0 go to then26
+	r0 = 0 # NO-OP
+	go to after27
+then26:
+	a = a - b
+after27:
+	tmp40 = a
+	r1 = tmp40
+	return

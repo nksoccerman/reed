@@ -1,0 +1,152 @@
+main:
+	g = get
+	y = 2
+	r = 2
+on1:
+	tmp1 = y
+	tmp2 = g
+	tmp3 = tmp1 - tmp2
+	if tmp3 < 0 go to istrue2
+	go to done3
+istrue2:
+	tmp4 = y
+	tmp5 = y
+	push tmp5
+	push tmp4
+	call mul
+	y = r1
+	r0 = pop
+	r0 = pop
+	put r
+	tmp6 = r
+	tmp7 = 1
+	r = tmp6 + tmp7
+	go to on1
+done3:
+	stop
+mul:
+	a = mem[sp+1]
+	b = mem[sp+2]
+	p = 0
+on4:
+	tmp8 = 0
+	tmp9 = a
+	tmp10 = tmp8 - tmp9
+	if tmp10 < 0 go to istrue5
+	go to done6
+istrue5:
+	c = a
+	c = c // 2
+	tmp11 = c
+	tmp11 = tmp11 * 2
+	tmp12 = a
+	tmp13 = tmp11 - tmp12
+	if tmp13 == 0 go to then7
+	p = p + b
+	go to after8
+then7:
+	r0 = 0 # NO-OP
+after8:
+	a = c
+	b = b
+	b = b * 2
+	go to on4
+done6:
+	tmp14 = p
+	r1 = tmp14
+	return
+div:
+	a = mem[sp+1]
+	b = mem[sp+2]
+	one = 1
+	q = 0
+	tmp15 = b
+	tmp16 = 0
+	tmp17 = tmp15 - tmp16
+	if tmp17 < 0 go to then9
+	r0 = 0 # NO-OP
+	go to after10
+then9:
+	a = r0 - a
+	b = r0 - b
+after10:
+on11:
+	tmp18 = a
+	tmp19 = 0
+	tmp20 = tmp18 - tmp19
+	if tmp20 < 0 go to istrue12
+	go to done13
+istrue12:
+	a = a + b
+	q = q - one
+	go to on11
+done13:
+on14:
+	tmp21 = b
+	tmp22 = a
+	tmp23 = tmp21 - tmp22
+	if tmp23 < 0 go to istrue15
+	go to done16
+istrue15:
+	a = a - b
+	q = q + one
+	go to on14
+done16:
+	tmp24 = a
+	tmp25 = b
+	tmp26 = tmp24 - tmp25
+	if tmp26 == 0 go to then17
+	r0 = 0 # NO-OP
+	go to after18
+then17:
+	a = a - b
+	q = q + one
+after18:
+	tmp27 = q
+	r1 = tmp27
+	return
+mod:
+	a = mem[sp+1]
+	b = mem[sp+2]
+	tmp28 = b
+	tmp29 = 0
+	tmp30 = tmp28 - tmp29
+	if tmp30 < 0 go to then19
+	r0 = 0 # NO-OP
+	go to after20
+then19:
+	a = r0 - a
+	b = r0 - b
+after20:
+on21:
+	tmp31 = a
+	tmp32 = 0
+	tmp33 = tmp31 - tmp32
+	if tmp33 < 0 go to istrue22
+	go to done23
+istrue22:
+	a = a + b
+	go to on21
+done23:
+on24:
+	tmp34 = b
+	tmp35 = a
+	tmp36 = tmp34 - tmp35
+	if tmp36 < 0 go to istrue25
+	go to done26
+istrue25:
+	a = a - b
+	go to on24
+done26:
+	tmp37 = a
+	tmp38 = b
+	tmp39 = tmp37 - tmp38
+	if tmp39 == 0 go to then27
+	r0 = 0 # NO-OP
+	go to after28
+then27:
+	a = a - b
+after28:
+	tmp40 = a
+	r1 = tmp40
+	return

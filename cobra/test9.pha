@@ -1,0 +1,147 @@
+main:
+	b = 1
+on1:
+	tmp1 = b
+	tmp2 = 100
+	tmp3 = tmp1 - tmp2
+	if tmp3 < 0 go to istrue2
+	go to done3
+istrue2:
+	put b
+	tmp4 = b
+	tmp5 = 5
+	push tmp5
+	push tmp4
+	call mul
+	b = r1
+	r0 = pop
+	r0 = pop
+	go to on1
+done3:
+	stop
+mul:
+	a = mem[sp+1]
+	b = mem[sp+2]
+	p = 0
+on4:
+	tmp6 = 0
+	tmp7 = a
+	tmp8 = tmp6 - tmp7
+	if tmp8 < 0 go to istrue5
+	go to done6
+istrue5:
+	c = a
+	c = c // 2
+	tmp9 = c
+	tmp9 = tmp9 * 2
+	tmp10 = a
+	tmp11 = tmp9 - tmp10
+	if tmp11 == 0 go to then7
+	p = p + b
+	go to after8
+then7:
+	r0 = 0 # NO-OP
+after8:
+	a = c
+	b = b
+	b = b * 2
+	go to on4
+done6:
+	tmp12 = p
+	r1 = tmp12
+	return
+div:
+	a = mem[sp+1]
+	b = mem[sp+2]
+	one = 1
+	q = 0
+	tmp13 = b
+	tmp14 = 0
+	tmp15 = tmp13 - tmp14
+	if tmp15 < 0 go to then9
+	r0 = 0 # NO-OP
+	go to after10
+then9:
+	a = r0 - a
+	b = r0 - b
+after10:
+on11:
+	tmp16 = a
+	tmp17 = 0
+	tmp18 = tmp16 - tmp17
+	if tmp18 < 0 go to istrue12
+	go to done13
+istrue12:
+	a = a + b
+	q = q - one
+	go to on11
+done13:
+on14:
+	tmp19 = b
+	tmp20 = a
+	tmp21 = tmp19 - tmp20
+	if tmp21 < 0 go to istrue15
+	go to done16
+istrue15:
+	a = a - b
+	q = q + one
+	go to on14
+done16:
+	tmp22 = a
+	tmp23 = b
+	tmp24 = tmp22 - tmp23
+	if tmp24 == 0 go to then17
+	r0 = 0 # NO-OP
+	go to after18
+then17:
+	a = a - b
+	q = q + one
+after18:
+	tmp25 = q
+	r1 = tmp25
+	return
+mod:
+	a = mem[sp+1]
+	b = mem[sp+2]
+	tmp26 = b
+	tmp27 = 0
+	tmp28 = tmp26 - tmp27
+	if tmp28 < 0 go to then19
+	r0 = 0 # NO-OP
+	go to after20
+then19:
+	a = r0 - a
+	b = r0 - b
+after20:
+on21:
+	tmp29 = a
+	tmp30 = 0
+	tmp31 = tmp29 - tmp30
+	if tmp31 < 0 go to istrue22
+	go to done23
+istrue22:
+	a = a + b
+	go to on21
+done23:
+on24:
+	tmp32 = b
+	tmp33 = a
+	tmp34 = tmp32 - tmp33
+	if tmp34 < 0 go to istrue25
+	go to done26
+istrue25:
+	a = a - b
+	go to on24
+done26:
+	tmp35 = a
+	tmp36 = b
+	tmp37 = tmp35 - tmp36
+	if tmp37 == 0 go to then27
+	r0 = 0 # NO-OP
+	go to after28
+then27:
+	a = a - b
+after28:
+	tmp38 = a
+	r1 = tmp38
+	return

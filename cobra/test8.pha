@@ -1,0 +1,16 @@
+main:
+	i = 0
+on1:
+	tmp1 = i
+	tmp2 = 10
+	tmp3 = tmp1 - tmp2
+	if tmp3 < 0 go to istrue2
+	go to done3
+istrue2:
+	put i
+	tmp4 = i
+	tmp5 = 1
+	i = tmp4 + tmp5
+	go to on1
+done3:
+	stop
